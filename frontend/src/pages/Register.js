@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './register.css';
 
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
+        surname: '',
+        dateOfBirth: '',
+        age: '',
         email: '',
         password: ''
     });
 
-    const { name, email, password } = formData;
+    const { name, surname, dateOfBirth, age, email, password } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -17,6 +21,9 @@ const Register = () => {
 
         const newUser = {
             name,
+            surname,
+            dateOfBirth,
+            age,
             email,
             password
         };
@@ -30,10 +37,10 @@ const Register = () => {
     };
 
     return (
-        <div>
-            <h1>Register</h1>
-            <form onSubmit={e => onSubmit(e)}>
-                <div>
+        <div className="register-container">
+            <h1 className="register-header">Register</h1>
+            <form className="register-form" onSubmit={e => onSubmit(e)}>
+                <div className="form-group">
                     <input
                         type="text"
                         placeholder="Name"
@@ -42,7 +49,34 @@ const Register = () => {
                         onChange={e => onChange(e)}
                     />
                 </div>
-                <div>
+                <div className="form-group">
+                    <input
+                        type="text"
+                        placeholder="Surname"
+                        name="surname"
+                        value={surname}
+                        onChange={e => onChange(e)}
+                    />
+                </div>
+                <div className="form-group">
+                    <input
+                        type="date"
+                        placeholder="Date of Birth"
+                        name="dateOfBirth"
+                        value={dateOfBirth}
+                        onChange={e => onChange(e)}
+                    />
+                </div>
+                <div className="form-group">
+                    <input
+                        type="number"
+                        placeholder="Age"
+                        name="age"
+                        value={age}
+                        onChange={e => onChange(e)}
+                    />
+                </div>
+                <div className="form-group">
                     <input
                         type="email"
                         placeholder="Email"
@@ -51,7 +85,7 @@ const Register = () => {
                         onChange={e => onChange(e)}
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <input
                         type="password"
                         placeholder="Password"
@@ -60,7 +94,7 @@ const Register = () => {
                         onChange={e => onChange(e)}
                     />
                 </div>
-                <input type="submit" value="Register" />
+                <input type="submit" value="Register" className="btn" />
             </form>
         </div>
     );
