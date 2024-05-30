@@ -1,87 +1,118 @@
+// controllers/eventController.js
+
 const Event = require('../models/Event');
+const Reservation = require('../models/Reservation');
 
-exports.createEvent = async (req, res) => {
+const createEvent = async (req, res) => {
     const { title, description, date, location, categories, tags } = req.body;
-
     try {
-        const event = new Event({
+        const newEvent = new Event({
             title,
             description,
             date,
             location,
-            categories,
-            tags,
-            createdBy: req.user.id
+            categories: categories.split(',').map(category => category.trim()),
+            tags: tags.split(',').map(tag => tag.trim())
+        });
+        await newEvent.save();
+        res.status(201).json({ message: 'Event created successfully', event: newEvent });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const getEvents = async (req, res) => {
+    try {
+        const events = await Event.find();
+        res.status(200).json({ events });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+
+const getEvent = async (req, res) => {
+    const eventId = req.params.id;
+    try {
+        const event = await Event.findById(eventId);
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+        res.status(200).json({ event });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const updateEvent = async (req, res) => {
+    const eventId = req.params.id;
+    const { title, description, date, location, categories, tags } = req.body;
+    try {
+        const updatedEvent = await Event.findByIdAndUpdate(eventId, {
+            title,
+            description,
+            date,
+            location,
+            categories: categories.split(',').map(category => category.trim()),
+            tags: tags.split(',').map(tag => tag.trim())
+        }, { new: true });
+        if (!updatedEvent) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+        res.status(200).json({ message: 'Event updated successfully', event: updatedEvent });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const deleteEvent = async (req, res) => {
+    const eventId = req.params.id;
+    try {
+        const deletedEvent = await Event.findByIdAndDelete(eventId);
+        if (!deletedEvent) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+        res.status(200).json({ message: 'Event deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const reserveEvent = async (req, res) => {
+    const { eventId, numberOfTickets } = req.body;
+    const userId = req.user.id; // Assuming req.user is populated by auth middleware
+
+    try {
+        const event = await Event.findById(eventId);
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+
+        const reservation = new Reservation({
+            event: eventId,
+            user: userId,
+            numberOfTickets
         });
 
-        await event.save();
-        res.json(event);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
+        await reservation.save();
+
+        res.status(200).json({ message: 'Event reserved successfully', reservation });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
-exports.getEvents = async (req, res) => {
-    try {
-        const events = await Event.find().populate('createdBy', ['name', 'email']);
-        res.json(events);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
-};
-
-exports.getEvent = async (req, res) => {
-    try {
-        const event = await Event.findById(req.params.id).populate('createdBy', ['name', 'email']);
-
-        if (!event) {
-            return res.status(404).json({ msg: 'Event not found' });
-        }
-
-        res.json(event);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
-};
-
-exports.updateEvent = async (req, res) => {
-    const { title, description, date, location, categories, tags } = req.body;
-
-    try {
-        let event = await Event.findById(req.params.id);
-
-        if (!event) {
-            return res.status(404).json({ msg: 'Event not found' });
-        }
-
-        event = await Event.findByIdAndUpdate(
-            req.params.id,
-            { $set: { title, description, date, location, categories, tags } },
-            { new: true }
-        );
-
-        res.json(event);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
-};
-
-exports.deleteEvent = async (req, res) => {
-    try {
-        const event = await Event.findById(req.params.id);
-
-        if (!event) {
-            return res.status(404).json({ msg: 'Event not found' });
-        }
-
-        await event.remove();
-        res.json({ msg: 'Event removed' });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
+module.exports = {
+    createEvent,
+    getEvents,
+    getEvent,
+    updateEvent,
+    deleteEvent,
+    reserveEvent
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import './dashboard.css';
 
 const Dashboard = () => {
@@ -8,139 +9,88 @@ const Dashboard = () => {
     const [newUser, setNewUser] = useState({ name: '', email: '' });
     const [newEvent, setNewEvent] = useState({ title: '', date: '' });
 
-    // JWT token
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY1NzFiMWU0NzRkYzcwOWZjMDkyMTU4Iiwicm9sZSI6InVzZXIifSwiaWF0IjoxNzE2OTg0NjA3LCJleHAiOjE3MTY5ODgyMDd9.8taOea6L25XdKrcolGdhVH7pRlb1jKSJwZfEgKdImlc";
+    const fetchUsers = async () => {
+        try {
+            const res = await axios.get('http://localhost:5000/api/auth/user');
+            setUsers(res.data);
+        } catch (error) {
+            toast.error('Error fetching users');
+        }
+    };
+
+    const fetchEvents = async () => {
+        try {
+            const res = await axios.get('http://localhost:5000/api/events');
+            setEvents(res.data);
+        } catch (error) {
+            toast.error('Error fetching events');
+        }
+    };
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const res = await axios.get('http://localhost:5000/api/auth/user', {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                setUsers(res.data);
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
-
-        const fetchEvents = async () => {
-            try {
-                const res = await axios.get('http://localhost:5000/api/events', {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                setEvents(res.data);
-            } catch (error) {
-                console.error('Error fetching events:', error);
-            }
-        };
-
         fetchUsers();
         fetchEvents();
     }, []);
 
     const addUser = async () => {
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/user', newUser, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const res = await axios.post('http://localhost:5000/api/auth/user', newUser);
             setUsers([...users, res.data]);
             setNewUser({ name: '', email: '' });
+            toast.success('User added successfully');
         } catch (error) {
-            console.error('Error adding user:', error);
+            toast.error('Error adding user');
         }
     };
 
     const updateUser = async (id, updatedUser) => {
         try {
-            const res = await axios.put(`http://localhost:5000/api/auth/user/${id}`, updatedUser, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const res = await axios.put(`http://localhost:5000/api/auth/user/${id}`, updatedUser);
             setUsers(users.map(user => (user._id === id ? res.data : user)));
+            toast.success('User updated successfully');
         } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.error('User not found:', error);
-            } else {
-                console.error('Error updating user:', error);
-            }
+            toast.error('Error updating user');
         }
     };
 
     const deleteUser = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/auth/user/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            await axios.delete(`http://localhost:5000/api/auth/user/${id}`);
             setUsers(users.filter(user => user._id !== id));
+            toast.success('User deleted successfully');
         } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.error('User not found:', error);
-            } else {
-                console.error('Error deleting user:', error);
-            }
+            toast.error('Error deleting user');
         }
     };
 
     const addEvent = async () => {
         try {
-            const res = await axios.post('http://localhost:5000/api/events', newEvent, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const res = await axios.post('http://localhost:5000/api/events', newEvent);
             setEvents([...events, res.data]);
             setNewEvent({ title: '', date: '' });
+            toast.success('Event added successfully');
         } catch (error) {
-            console.error('Error adding event:', error);
+            toast.error('Error adding event');
         }
     };
 
     const updateEvent = async (id, updatedEvent) => {
         try {
-            const res = await axios.put(`http://localhost:5000/api/events/${id}`, updatedEvent, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const res = await axios.put(`http://localhost:5000/api/events/${id}`, updatedEvent);
             setEvents(events.map(event => (event._id === id ? res.data : event)));
+            toast.success('Event updated successfully');
         } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.error('Event not found:', error);
-            } else {
-                console.error('Error updating event:', error);
-            }
+            toast.error('Error updating event');
         }
     };
 
     const deleteEvent = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/events/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            await axios.delete(`http://localhost:5000/api/events/${id}`);
             setEvents(events.filter(event => event._id !== id));
+            toast.success('Event deleted successfully');
         } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.error('Event not found:', error);
-            } else {
-                console.error('Error deleting event:', error);
-            }
+            toast.error('Error deleting event');
         }
     };
 

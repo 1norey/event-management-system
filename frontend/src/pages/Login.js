@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './login.css';
 
 const Login = () => {
@@ -7,6 +8,8 @@ const Login = () => {
         email: '',
         password: ''
     });
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const { email, password } = formData;
 
@@ -15,42 +18,48 @@ const Login = () => {
     const onSubmit = async e => {
         e.preventDefault();
 
-        const user = {
-            email,
-            password
-        };
-
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', user);
-            console.log(res.data);
+            const res = await axios.post('http://localhost:5000/api/auth/login', {
+                email,
+                password
+            });
+
+            // Store token in local storage
+            localStorage.setItem('token', res.data.token);
+
+            // Redirect to homepage
+            navigate('/');
         } catch (err) {
-            console.error(err.response.data);
+            setError(err.response.data.message);
         }
     };
 
     return (
-        <div className="login-container">
-            <h1 className="login-header">Login</h1>
-            <form className="login-form" onSubmit={e => onSubmit(e)}>
-                <div className="form-group">
+        <div>
+            <h1>Login</h1>
+            <form onSubmit={onSubmit}>
+                <div>
                     <input
                         type="email"
                         placeholder="Email"
                         name="email"
                         value={email}
-                        onChange={e => onChange(e)}
+                        onChange={onChange}
+                        required
                     />
                 </div>
-                <div className="form-group">
+                <div>
                     <input
                         type="password"
                         placeholder="Password"
                         name="password"
                         value={password}
-                        onChange={e => onChange(e)}
+                        onChange={onChange}
+                        required
                     />
                 </div>
-                <input type="submit" value="Login" className="btn" />
+                {error && <p>{error}</p>}
+                <input type="submit" value="Login" />
             </form>
         </div>
     );

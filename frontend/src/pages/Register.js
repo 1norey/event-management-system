@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Ensure this is correctly imported
 import './register.css';
 
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
         surname: '',
-        dateOfBirth: '',
         age: '',
+        dateOfBirth: '',
         email: '',
         password: ''
     });
 
-    const { name, surname, dateOfBirth, age, email, password } = formData;
+    const navigate = useNavigate();
+
+    const { name, surname, age, dateOfBirth, email, password } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -22,31 +27,36 @@ const Register = () => {
         const newUser = {
             name,
             surname,
-            dateOfBirth,
             age,
+            dateOfBirth,
             email,
             password
         };
 
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/register', newUser);
-            console.log(res.data);
+            await axios.post('http://localhost:5000/api/auth/register', newUser);
+            toast.success('Registration successful!');
+            navigate('/login');
         } catch (err) {
-            console.error(err.response.data);
+            if (err.response && err.response.data && err.response.data.msg) {
+                toast.error(err.response.data.msg);
+            } else {
+                toast.error('An error occurred while registering. Please try again later.');
+            }
         }
     };
 
     return (
         <div className="register-container">
             <h1 className="register-header">Register</h1>
-            <form className="register-form" onSubmit={e => onSubmit(e)}>
+            <form className="register-form" onSubmit={onSubmit}>
                 <div className="form-group">
                     <input
                         type="text"
                         placeholder="Name"
                         name="name"
                         value={name}
-                        onChange={e => onChange(e)}
+                        onChange={onChange}
                     />
                 </div>
                 <div className="form-group">
@@ -55,16 +65,7 @@ const Register = () => {
                         placeholder="Surname"
                         name="surname"
                         value={surname}
-                        onChange={e => onChange(e)}
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="date"
-                        placeholder="Date of Birth"
-                        name="dateOfBirth"
-                        value={dateOfBirth}
-                        onChange={e => onChange(e)}
+                        onChange={onChange}
                     />
                 </div>
                 <div className="form-group">
@@ -73,7 +74,16 @@ const Register = () => {
                         placeholder="Age"
                         name="age"
                         value={age}
-                        onChange={e => onChange(e)}
+                        onChange={onChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <input
+                        type="date"
+                        placeholder="Date of Birth"
+                        name="dateOfBirth"
+                        value={dateOfBirth}
+                        onChange={onChange}
                     />
                 </div>
                 <div className="form-group">
@@ -82,7 +92,7 @@ const Register = () => {
                         placeholder="Email"
                         name="email"
                         value={email}
-                        onChange={e => onChange(e)}
+                        onChange={onChange}
                     />
                 </div>
                 <div className="form-group">
@@ -91,7 +101,7 @@ const Register = () => {
                         placeholder="Password"
                         name="password"
                         value={password}
-                        onChange={e => onChange(e)}
+                        onChange={onChange}
                     />
                 </div>
                 <input type="submit" value="Register" className="btn" />

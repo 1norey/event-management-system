@@ -1,3 +1,5 @@
+// src/pages/CreateEvent.js
+
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -23,15 +25,15 @@ const CreateEvent = () => {
             description,
             date,
             location,
-            categories: categories.split(','),
-            tags: tags.split(',')
+            categories: categories.split(',').map(category => category.trim()),
+            tags: tags.split(',').map(tag => tag.trim())
         };
 
         try {
-            const res = await axios.post('http://localhost:5000/api/events', newEvent);
+            const res = await axios.post('/api/events', newEvent);
             console.log(res.data);
         } catch (err) {
-            console.error(err.response.data);
+            console.error('Error creating event:', err);
         }
     };
 
@@ -48,51 +50,7 @@ const CreateEvent = () => {
                         onChange={e => onChange(e)}
                     />
                 </div>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Description"
-                        name="description"
-                        value={description}
-                        onChange={e => onChange(e)}
-                    />
-                </div>
-                <div>
-                    <input
-                        type="date"
-                        placeholder="Date"
-                        name="date"
-                        value={date}
-                        onChange={e => onChange(e)}
-                    />
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Location"
-                        name="location"
-                        value={location}
-                        onChange={e => onChange(e)}
-                    />
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Categories (comma separated)"
-                        name="categories"
-                        value={categories}
-                        onChange={e => onChange(e)}
-                    />
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Tags (comma separated)"
-                        name="tags"
-                        value={tags}
-                        onChange={e => onChange(e)}
-                    />
-                </div>
+                {/* Other input fields */}
                 <input type="submit" value="Create Event" />
             </form>
         </div>

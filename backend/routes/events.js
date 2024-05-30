@@ -5,15 +5,17 @@ const {
     getEvents,
     getEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    reserveEvent
 } = require('../controllers/eventController');
-const auth = require('../middleware/auth');
-const role = require('../middleware/role');
+const { verifyToken, checkRole } = require('../middleware/auth');
 
-router.post('/', auth, role('admin'), createEvent);
-router.get('/', getEvents);
+// Define routes for events
+router.post('/', verifyToken, checkRole('admin'), createEvent);
+router.get('/', getEvents); // Endpoint for fetching all events
 router.get('/:id', getEvent);
-router.put('/:id', auth, role('admin'), updateEvent);
-router.delete('/:id', auth, role('admin'), deleteEvent);
+router.put('/:id', verifyToken, checkRole('admin'), updateEvent);
+router.delete('/:id', verifyToken, checkRole('admin'), deleteEvent);
+router.post('/reserve', verifyToken, reserveEvent);
 
 module.exports = router;
