@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './login.css';
+
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -25,12 +25,14 @@ const Login = () => {
             });
 
             // Store token in local storage
+            console.log(res);
             localStorage.setItem('token', res.data.token);
 
             // Redirect to homepage
             navigate('/');
         } catch (err) {
             setError(err.response.data.message);
+            console.error(err);
         }
     };
 

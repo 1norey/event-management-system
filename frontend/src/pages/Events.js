@@ -10,7 +10,7 @@ const Events = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await axios.get('/api/events');
+                const res = await axios.get('http://localhost:5000/api/events');
                 setEvents(res.data.events);
             } catch (err) {
                 console.error('Error fetching events:', err);
@@ -23,10 +23,32 @@ const Events = () => {
 
     const reserveEvent = async (eventId) => {
         try {
-            await axios.post('/api/events/reserve', { eventId });
+            // Get the token from localStorage
+            const token = localStorage.getItem('token');
+            
+            // If token is not found, handle the error appropriately
+            if (!token) {
+                toast.error('User is not authenticated');
+                return;
+            }
+            
+            // Set up the axios configuration with headers
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+    
+            // Make the request to reserve the event
+            await axios.post('http://localhost:5000/api/events/reserve', { eventId }, config);
+            console.log(token);
+            // Display success message
             toast.success('Event reserved successfully');
         } catch (err) {
             console.error('Error reserving event:', err);
+            
+            // Display error message
             toast.error('Error reserving event');
         }
     };

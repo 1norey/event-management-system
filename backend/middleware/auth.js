@@ -1,4 +1,3 @@
-// middleware/auth.js
 const jwt = require('jsonwebtoken');
 
 // Middleware function for verifying JWT token
@@ -11,7 +10,7 @@ exports.verifyToken = function (req, res, next) {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded.user;
+        req.user = decoded;
         next();
     } catch (err) {
         res.status(401).json({ msg: 'Token is not valid' });
