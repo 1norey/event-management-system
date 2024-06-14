@@ -5,29 +5,13 @@ const EventSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String,
-        required: true
-    },
     date: {
         type: Date,
         required: true
     },
-    location: {
+    description: {
         type: String,
         required: true
-    },
-    categories: {
-        type: [String],
-        required: true
-    },
-    tags: {
-        type: [String],
-        required: true
-    },
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
     }
 });
 

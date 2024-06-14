@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import './login.css';  // Import the CSS file
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -25,22 +25,22 @@ const Login = () => {
             });
 
             // Store token in local storage
-            console.log(res);
             localStorage.setItem('token', res.data.token);
-
-            // Redirect to homepage
-            navigate('/');
+            if (res.data.role === "admin") {
+                navigate('/dashboard');
+            } else {
+                navigate('/');
+            }
         } catch (err) {
             setError(err.response.data.message);
-            console.error(err);
         }
     };
 
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={onSubmit}>
-                <div>
+        <div className="login-container">
+            <h1 className="login-header">Login</h1>
+            <form className="login-form" onSubmit={onSubmit}>
+                <div className="form-group">
                     <input
                         type="email"
                         placeholder="Email"
@@ -50,7 +50,7 @@ const Login = () => {
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <input
                         type="password"
                         placeholder="Password"
@@ -60,8 +60,8 @@ const Login = () => {
                         required
                     />
                 </div>
-                {error && <p>{error}</p>}
-                <input type="submit" value="Login" />
+                {error && <p className="error-message">{error}</p>}
+                <input className="btn" type="submit" value="Login" />
             </form>
         </div>
     );

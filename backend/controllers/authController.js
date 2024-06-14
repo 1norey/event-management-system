@@ -90,9 +90,76 @@ const getUser = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+const getUsers = async (req, res) => {
+    // Retrieve all users
+    try {
+        const users = await User.find().select('-password');
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+
+const deleteUser = async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const user = await User.findByIdAndDelete(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+const getUserById = async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const user = await User.findById(userId).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const updateUserById = async (req, res) => {
+    const { userId } = req.params;
+    const { name, email } = req.body;
+
+    try {
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { name, email },
+            { new: true, runValidators: true }
+        ).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 
 module.exports = {
     register,
     login,
-    getUser
+    getUser,
+    getUsers,
+    deleteUser,
+    updateUserById,
+    getUserById
+    
 };
+

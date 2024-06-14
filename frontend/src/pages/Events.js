@@ -1,5 +1,3 @@
-// src/pages/Events.js
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -23,35 +21,25 @@ const Events = () => {
 
     const reserveEvent = async (eventId) => {
         try {
-            // Get the token from localStorage
             const token = localStorage.getItem('token');
-            
-            // If token is not found, handle the error appropriately
-            if (!token) {
-                toast.error('User is not authenticated');
-                return;
-            }
-            
-            // Set up the axios configuration with headers
+    
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
                 }
             };
     
-            // Make the request to reserve the event
+            // Make the request using axios with the provided config
             await axios.post('http://localhost:5000/api/events/reserve', { eventId }, config);
-            console.log(token);
-            // Display success message
-            toast.success('Event reserved successfully');
+            
+            // Rest of the code
         } catch (err) {
             console.error('Error reserving event:', err);
-            
-            // Display error message
             toast.error('Error reserving event');
         }
     };
+    
+    
 
     return (
         <div className="events-container">

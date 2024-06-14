@@ -1,91 +1,107 @@
-// controllers/eventController.js
-
+const mongoose = require('mongoose');
 const Event = require('../models/Event');
+const jwt = require('jsonwebtoken');
 const Reservation = require('../models/Reservation');
 
+// Create an event
 const createEvent = async (req, res) => {
-    const { title, description, date, location, categories, tags } = req.body;
+    const { title, date, description } = req.body;
     try {
-        const newEvent = new Event({
-            title,
-            description,
-            date,
-            location,
-            categories: categories.split(',').map(category => category.trim()),
-            tags: tags.split(',').map(tag => tag.trim())
-        });
-        await newEvent.save();
-        res.status(201).json({ message: 'Event created successfully', event: newEvent });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        const newEvent = new Event({ title, date, description });
+        const event = await newEvent.save();
+        res.json(event);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
     }
 };
 
+// Get all events
 const getEvents = async (req, res) => {
     try {
         const events = await Event.find();
-        res.status(200).json({ events });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        res.json({ events });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
     }
 };
 
-
+// Get single event by ID
 const getEvent = async (req, res) => {
-    const eventId = req.params.id;
+    const { id } = req.params;
+
+    // Validate the event ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ msg: 'Invalid event ID' });
+    }
+
     try {
-        const event = await Event.findById(eventId);
+        const event = await Event.findById(id);
         if (!event) {
-            return res.status(404).json({ message: 'Event not found' });
+            return res.status(404).json({ msg: 'Event not found' });
         }
-        res.status(200).json({ event });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        res.json(event);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
     }
 };
 
+// Update an event
+// Example server-side route handler to update an event
 const updateEvent = async (req, res) => {
-    const eventId = req.params.id;
-    const { title, description, date, location, categories, tags } = req.body;
+    const { title, date, description } = req.body;
+
     try {
-        const updatedEvent = await Event.findByIdAndUpdate(eventId, {
-            title,
-            description,
-            date,
-            location,
-            categories: categories.split(',').map(category => category.trim()),
-            tags: tags.split(',').map(tag => tag.trim())
-        }, { new: true });
-        if (!updatedEvent) {
-            return res.status(404).json({ message: 'Event not found' });
+        // Find the event by ID
+        let event = await Event.findById(req.params.id);
+        if (!event) {
+            return res.status(404).json({ msg: 'Event not found' });
         }
-        res.status(200).json({ message: 'Event updated successfully', event: updatedEvent });
+
+        // Update the event fields
+        event.title = title;
+        event.date = new Date(date); // Ensure date is stored as Date object
+
+        event.description = description;
+
+        // Save the updated event
+        event = await event.save();
+
+        res.json(event); // Respond with updated event
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        console.error(error.message);
+        res.status(500).send('Server error');
     }
 };
 
+
+// Delete an event
 const deleteEvent = async (req, res) => {
-    const eventId = req.params.id;
     try {
-        const deletedEvent = await Event.findByIdAndDelete(eventId);
-        if (!deletedEvent) {
-            return res.status(404).json({ message: 'Event not found' });
+        const eventId = req.params.id;
+        if (!eventId) {
+            return res.status(400).json({ msg: 'Event ID is required' });
         }
-        res.status(200).json({ message: 'Event deleted successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+
+        let event = await Event.findById(eventId);
+        if (!event) {
+            return res.status(404).json({ msg: 'Event not found' });
+        }
+
+        await Event.findByIdAndDelete(eventId);
+        res.json({ msg: 'Event removed' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
     }
 };
 
+
+// Reserve an event
 const reserveEvent = async (req, res) => {
     const { eventId, numberOfTickets } = req.body;
-    const userId = req.user.id; // Assuming req.user is populated by auth middleware
 
     try {
         const event = await Event.findById(eventId);
@@ -93,12 +109,7 @@ const reserveEvent = async (req, res) => {
             return res.status(404).json({ message: 'Event not found' });
         }
 
-        const reservation = new Reservation({
-            event: eventId,
-            user: userId,
-            numberOfTickets
-        });
-
+        const reservation = new Reservation({ event: eventId, numberOfTickets });
         await reservation.save();
 
         res.status(200).json({ message: 'Event reserved successfully', reservation });

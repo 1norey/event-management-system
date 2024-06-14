@@ -1,5 +1,4 @@
 // src/components/Navbar.js
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -20,7 +19,10 @@ const Navbar = () => {
                         <li><Link to="/login">Login</Link></li>
                     </>
                 ) : (
-                    <li><Link to="/logout" onClick={() => localStorage.removeItem('token')}>Logout</Link></li>
+                    <li><Link to="/" onClick={() => {
+                        localStorage.removeItem('token');
+                        window.location.href = '/';
+                    }}>Logout</Link></li>
                 )}
             </ul>
         </nav>
