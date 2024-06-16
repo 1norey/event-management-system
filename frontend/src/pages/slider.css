@@ -1,0 +1,29 @@
+/* slider.css */
+
+.slider {
+    width: 100%;
+    height: 400px; /* Adjust height as needed */
+    overflow: hidden;
+}
+
+.slider-item {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+}
+
+.slider-item:first-child {
+    transform: translateX(0%);
+}
+
+.slider-item:nth-child(2) {
+    transform: translateX(100%);
+}
+
+.slider-item:nth-child(3) {
+    transform: translateX(200%);
+}
+
+
