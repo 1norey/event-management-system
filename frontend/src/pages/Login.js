@@ -26,6 +26,8 @@ const Login = () => {
 
             // Store token in local storage
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('role', res.data.role);
+
             if (res.data.role === "admin") {
                 navigate('/dashboard');
             } else {
