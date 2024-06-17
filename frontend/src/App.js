@@ -12,6 +12,9 @@ import Event from './pages/Event';
 import CreateEvent from './pages/CreateEvent';
 import Reservations from './pages/Reservations';
 import PrivateRoute from './components/PrivateRoute';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 
 function App() {
     return (

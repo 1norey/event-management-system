@@ -1,38 +1,53 @@
 import React from 'react';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import './home.css'; // Import your main home.css file
-import './slider.css'; // Import the newly created slider.css file
+import './home.css';
+import './slider.css';
 
 const Home = () => {
     const events = [
-        { title: 'AI & Machine Learning Conference', date: '2024-06-15', category: 'Computer Science', description: 'Explore the latest trends in AI and Machine Learning.'},
-        { title: 'Web Development Workshop', date: '2024-07-20', category: 'Computer Science', description: 'Hands-on workshop on modern web development techniques.' },
+        {
+            id: 1,
+            title: "AI Conference 2024",
+            date: "2024-09-15",
+            description: "Join us for a day of insightful talks and networking with AI experts.",
+            imageUrl: "/EventImages/AiEventImage.png"
+        },
+        {
+            id: 2,
+            title: "Blockchain Expo",
+            date: "2024-10-20",
+            description: "Discover the latest trends in blockchain technology.",
+            imageUrl: "/EventImages/BlockchainEventImage.png"
+        },
         // Add more events as needed
     ];
 
-    const sliderSettings = {
+    const settings = {
         dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 5000,
+        autoplay: true,  // Enable autoplay
+        autoplaySpeed: 3000,  // Change slide every 3 seconds
+        arrows: true  // Show navigation arrows
     };
 
     return (
         <div className="home-container">
-            <h1 className="home-title">Welcome to the Event Management System</h1>
-            <Slider {...sliderSettings}>
-                {events.map((event, index) => (
-                    <div key={index} className="slider-item" >
-                        <div className="content">
-                            <h2 className="event-title">{event.title}</h2>
-                            <p className="event-date">{event.date}</p>
-                            <p className="event-category">{event.category}</p>
-                            <p className="event-description">{event.description}</p>
+            <h1 className="home-title">Upcoming Events</h1>
+            <Slider {...settings}>
+                {events.map(event => (
+                    <div key={event.id} className="slider-item">
+                        <div
+                            className="slider-item-background"
+                            style={{ backgroundImage: `url(${event.imageUrl})` }}
+                        >
+                            <div className="slider-content">
+                                <h2>{event.title}</h2>
+                                <p>{event.description}</p>
+                                <p>{new Date(event.date).toLocaleDateString()}</p>
+                            </div>
                         </div>
                     </div>
                 ))}
