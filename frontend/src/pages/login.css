@@ -7,19 +7,19 @@
 
 /* Body Styles */
 body {
-  font-family: Arial, sans-serif;
-  background: radial-gradient(circle, rgba(0, 0, 70, 1) 0%, rgba(0, 0, 40, 1) 100%);
+  font-family: Arial, sans-serif; 
   color: #fff;
-}
+  
+} 
 
-/* Login Page Styles */
+/* Login Container Styles */
 .login-container {
-  max-width: 500px;
-  margin: 50px auto; /* Ensure container doesn't touch the top navbar */
-  background: linear-gradient(135deg, #71afed, #02216f); /* Gradient background color */
+  max-width: 400px;
+  margin: 50px auto;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
   padding: 2rem;
-  border-radius: 20px; /* Increased border radius */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Updated box-shadow for glow effect */
 }
 
 .login-header {
@@ -27,42 +27,29 @@ body {
   margin-bottom: 1.5rem;
   text-align: center;
   color: #fff;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.login-form .form-group {
-  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Text glowing effect */
 }
 
 .login-form .form-group input {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
+  background-color: #ffffff;
+  color: #333;
   border: 1px solid #ccc;
-  border-radius: 12px; /* Increased border radius */
-  background-color: rgba(255, 255, 255, 0.9); /* Lighter background color */
-  color: #333; /* Dark text color */
 }
 
 .btn {
-  display: block;
-  width: 100%;
-  background-color: #007bff;
-  color: #fff;
-  padding: 1rem;
-  border: none;
-  border-radius: 12px; /* Increased border radius */
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  background-color: #ffcc00;
+  color: #333;
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.8); /* Button glowing effect */
+  transition: box-shadow 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background-color: #f3b800;
+  box-shadow: 0 0 20px rgba(243, 184, 0, 1); /* Adjusted glowing effect on hover */
 }
 
 .error-message {
   color: red;
-  margin-bottom: 1rem;
-  text-align: center;
 }
+
+

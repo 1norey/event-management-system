@@ -1,14 +1,526 @@
-/* src/pages/home.css */
-
-.home-container {
-    padding: 2rem;
-    background-color: #f0f4f8;
+ .home-container {
+    padding: 1.3rem;
+    background-color:transparent;
     color: #333;
     text-align: center;
 }
 
 .home-title {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
+    font-size: 2.0rem; /* Larger font size for emphasis */
+    margin-bottom: 0.5rem; /* Space below the title */
+    color: #000000; /* Text color */
+    background-color: transparent; /* Light background color */
+    padding: 15px; /* Padding around the text */
+    text-align: center; /* Center align the text */
+    font-family: 'Roboto', sans-serif; /* Tech-savvy font */
+    text-shadow: 0 0 10px rgba(0, 0, 255, 0.8); /* Initial glow effect (blue in this example) */
+    animation: glow-animation 1s ease-in-out infinite alternate; /* Animation for glowing effect */
+}
+
+@keyframes glow-animation {
+    0% {
+        text-shadow: 0 0 10px rgba(0, 0, 255, 0.8); /* Initial glow effect */
+    }
+    100% {
+        text-shadow: 0 0 20px rgba(0, 0, 255, 1), 0 0 30px rgba(0, 0, 255, 0.8), 0 0 40px rgba(0, 0, 255, 0.6); /* Stronger glow effect */
+    }
+}
+
+.about-event-management {
+    max-width: 100%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color:white;
+    border: 1px solid #ddd;
+    overflow: hidden; /* Clear floats */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Example of pretty fonts */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center align items vertically */
+}
+
+.event-image {
+    flex: 1; /* Take up remaining space */
+    max-width: 40%; /* Adjust the width of the image as needed */
+    margin-right: 20px; /* Add space between the image and text */
+}
+
+.about-event-management p {
+    flex: 2; /* Take up more space than the image */
+    text-align: left; /* Align the text to the left */
+    margin-top: 0; /* Remove default margin */
+    font-size: 18px; /* Increase the font size */
+    line-height: 1.6; /* Adjust line height for better readability */
+}
+
+/* Styles for the services section */
+
+.services-section {
+    background-color: #fff;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.services-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.service {
+    width: 45%;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.service img {
+    width: 80px; /* Adjust icon size */
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.service h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
     color: #0056b3;
 }
+
+.service p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Styles for the contact section */
+/* src/pages/home.css */
+
+.home-container {
+    padding: 1.3rem;
+    background-color: #f3f6fa;
+    color: #333;
+    text-align: center;
+}
+
+.home-title {
+    font-size: 2.0rem; /* Larger font size for emphasis */
+    margin-bottom: 0.5rem; /* Space below the title */
+    color: #000000; /* Text color */
+    background-color: transparent; /* Light background color */
+    padding: 15px; /* Padding around the text */
+    text-align: center; /* Center align the text */
+    font-family: 'Roboto', sans-serif; /* Tech-savvy font */
+    text-shadow: 0 0 10px rgba(0, 0, 255, 0.8); /* Initial glow effect (blue in this example) */
+    animation: glow-animation 1s ease-in-out infinite alternate; /* Animation for glowing effect */
+}
+
+@keyframes glow-animation {
+    0% {
+        text-shadow: 0 0 10px rgba(0, 0, 255, 0.8); /* Initial glow effect */
+    }
+    100% {
+        text-shadow: 0 0 20px rgba(0, 0, 255, 1), 0 0 30px rgba(0, 0, 255, 0.8), 0 0 40px rgba(0, 0, 255, 0.6); /* Stronger glow effect */
+    }
+}
+
+.about-event-management {
+    max-width: 100%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+
+    overflow: hidden; /* Clear floats */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Example of pretty fonts */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center align items vertically */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.event-image {
+    flex: 1; /* Take up remaining space */
+    max-width: 40%; /* Adjust the width of the image as needed */
+    margin-right: 20px; /* Add space between the image and text */
+}
+
+.about-event-management p {
+    flex: 2; /* Take up more space than the image */
+    text-align: left; /* Align the text to the left */
+    margin-top: 0; /* Remove default margin */
+    font-size: 18px; /* Increase the font size */
+    line-height: 1.6; /* Adjust line height for better readability */
+}
+
+/* Styles for the services section */
+
+.services-section {
+    background-color: #fff;
+    padding: 40px 0;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.services-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+    
+}
+
+.service {
+    width: 45%;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: left;
+
+}
+
+.service img {
+    width: 80px; /* Adjust icon size */
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.service h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #0056b3;
+}
+
+.service p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Countdown Container */
+.countdown-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.countdown-container h2 {
+    margin-bottom: 20px; /* Add margin below the heading */
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.time-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.8);
+}
+
+.time {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000;
+    text-shadow: 0 0 10px rgba(0, 0, 255, 0.8);
+    animation: glow-animation 1s ease-in-out infinite alternate;
+}
+
+.label {
+    font-size: 1rem;
+    color: #666;
+}
+
+@keyframes glow-animation {
+    0% {
+        text-shadow: 0 0 10px rgba(0, 0, 255, 0.8);
+    }
+    100% {
+        text-shadow: 0 0 20px rgba(0, 0, 255, 1), 0 0 30px rgba(0, 0, 255, 0.8), 0 0 40px rgba(0, 0, 255, 0.6);
+    }
+}
+
+
+
+
+
+/* Styles for the contact section */
+.contact-us {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    padding: 20px;
+    background-color: white;
+    margin-top: 40px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.contact-us h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: #333;
+}
+
+.contact-form-container,
+.contact-map-container {
+    flex: 1; /* Equal flex distribution */
+    max-width: 600px;
+    padding: 0 10px; /* Adjust padding for spacing */
+}
+
+.contact-form {
+    margin-right: 20px; /* Add margin for spacing */
+}
+
+.contact-form h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: #333;
+}
+
+.contact-form p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.contact-form input,
+.contact-form textarea {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%; /* Adjust width to fill container */
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.contact-form button[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.contact-form button[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+.contact-map-container {
+    height: 450px;
+}
+
+.contact-map {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.contact-map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.carousel-container {
+    overflow: hidden;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.carousel-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    animation: carousel-animation 100s linear infinite;
+    position: relative;
+}
+
+.carousel-item {
+    flex: 0 0 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+   
+}
+
+@keyframes carousel-animation {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.carousel-inner.clone {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.carousel-inner.clone:first-child {
+    left: -100%;
+}
+
+.carousel-inner.clone:last-child {
+    left: 200%;
+}
+ .gap{
+    height: 40px;
+ }
+  
+
+  .text{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+
+    margin-top: 40px;
+  }
+
+
+  .price-calculator {
+    margin-top: 40px;
+    padding: 30px; /* Increased padding for more space */
+    background-color: #FFFFFF; /* White background color */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .price-calculator h2 {
+    margin-bottom: 20px; /* Added margin to create space below the header */
+    margin-top: 20px; /* Added margin to create space above the header */
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px; /* Increased font size */
+    color: #00698f; /* Changed color to a darker blue */
+  }
+  
+  .price-calculator form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .price-calculator label {
+    margin-bottom: 20px; /* Increased margin for more space */
+    font-weight: bold;
+    font-size: 24px; /* Increased font size */
+  }
+  
+  .price-calculator input,
+  .price-calculator select {
+    padding: 15px; /* Increased padding for more space */
+    margin-bottom: 30px; /* Increased margin for more space */
+    border: none;
+    border-radius: 10px;
+    background-color: #f7f7f7; /* Light gray background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 24px; /* Increased font size */
+  }
+  
+  .price-calculator button[type="button"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 15px 30px; /* Increased padding for more space */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 24px; /* Increased font size */
+  }
+  
+  .price-calculator button[type="button"]:hover {
+    background-color: #3e8e41;
+  }
+  
+  .price-calculator .result {
+    font-size: 40px; /* Increased font size to make the result bigger */
+    font-weight: bold;
+    color: #00698f; /* Changed color to a darker blue */
+    margin-top: 20px; /* Added margin to create space above the result */
+    margin-bottom: 20px; /* Added margin to create space below the result */
+  }
+
+  .social-media-div {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  
+    text-align: center;
+  }
+  
+  .social-media-div h2 {
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: #23527c;
+    padding: 10px;
+  }
+  
+  .social-media-div ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .social-media-div li {
+    margin-right: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .social-media-div a {
+    color: #337ab7;
+    text-decoration: none;
+  }
+  
+  .social-media-div a:hover {
+    color: #23527c;
+  }
+  
+  .social-media-div img {
+    width: 120px;
+    height: 120px;
+    margin-right: 20px;
+    border-radius: 10px;
+    object-fit: cover; /* Add this to ensure images are scaled correctly */
+  }
