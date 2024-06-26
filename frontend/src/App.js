@@ -11,10 +11,10 @@ import Events from './pages/Events';
 import Event from './pages/Event';
 import CreateEvent from './pages/CreateEvent';
 import Reservations from './pages/Reservations';
+import OurTeam from './pages/OurTeam'; // Import OurTeam component
 import PrivateRoute from './components/PrivateRoute';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 
 function App() {
     return (
@@ -29,6 +29,7 @@ function App() {
                 <Route path="/events/create" element={<PrivateRoute component={CreateEvent} allowedRoles={['admin']} />} />
                 <Route path="/events/:id" element={<Event />} />
                 <Route path="/reservations" element={<PrivateRoute component={Reservations} allowedRoles={['user', 'admin']} />} />
+                <Route path="/our-team" element={<OurTeam />} /> {/* Route for OurTeam component */}
             </Routes>
         </div>
     );

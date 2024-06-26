@@ -1,0 +1,46 @@
+/* src/pages/our-team.css */
+
+.team-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-items: center;
+}
+
+.team-member {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+}
+
+.team-member img {
+    width: 100%; /* Make the image responsive */
+    max-width: 100%; /* Ensure image does not exceed its container */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 200px; /* Limit the maximum height */
+    border-radius: 50%; /* Make the image circular */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.team-member p {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .team-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
