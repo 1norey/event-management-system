@@ -4,6 +4,7 @@ import './home.css'; // Import your CSS file for home styles
 import './slider.css'; // Import your CSS file for slider styles
 import PriceCalculator from './PriceCalculator.';
 
+
 const Home = () => {
     // Sample events data
     const events = [
@@ -297,27 +298,28 @@ const Home = () => {
     <h1> Thank you to some of our Sponsors</h1>
 </div>
     
-            <div className="contact-us">
-                <div className="contact-form">
-                    <h2>Get in Touch</h2>
-                    <p>Have a question or want to learn more about our events? Send us a message!</p>
-                    <form>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <textarea placeholder="Message" />
-                        <button type="submit">Send</button>
-                    </form>
-                </div>
-                <div>
-                    <iframe className="contact-map"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387198.0696314914!2d-74.60356651051723!3d40.69632978678025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1718931541611!5m2!1sen!2s"
-                        allowFullScreen=""
-                        loading="lazy"
-                    ></iframe>
-                </div>
-            </div>
+<div className="contact-us">
+        <div className="contact-form">
+          <h2>Get in Touch</h2>
+          <p>Have a question or want to learn more about our events? Send us a message!</p>
+          <form>
+            <input type="text" placeholder="Name" />
+            <input type="email" placeholder="Email" />
+            <textarea placeholder="Message" />
+            <button type="submit">Send</button>
+          </form>
         </div>
-    );
+        <div>
+          <iframe
+            className="contact-map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387198.0696314914!2d-74.60356651051723!3d40.69632978678025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1718931541611!5m2!1sen!2s"
+            allowFullScreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Home;
