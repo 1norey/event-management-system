@@ -37,15 +37,15 @@ body {
 }
 
 .btn {
-  background-color: #ffcc00;
+  background-color: #0d00ff;
   color: #333;
-  box-shadow: 0 0 20px rgba(255, 204, 0, 0.8); /* Button glowing effect */
+  box-shadow: 0 0 20px rgba(102, 0, 255, 0.8); /* Button glowing effect */
   transition: box-shadow 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #f3b800;
-  box-shadow: 0 0 20px rgba(243, 184, 0, 1); /* Adjusted glowing effect on hover */
+  background-color: #3d00f3;
+  box-shadow: 0 0 20px rgb(0, 8, 243); /* Adjusted glowing effect on hover */
 }
 
 .error-message {
