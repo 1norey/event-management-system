@@ -27,6 +27,8 @@ const Navbar = () => {
                 ) : (
                     <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
                 )}
+                
+                <li><Link to="/our-team">Our Team</Link></li> 
             </ul>
         </nav>
     );
