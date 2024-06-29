@@ -5,7 +5,7 @@ const teamMembers = [
     {
         name: 'Rinor Bytyqi',
         role: 'Full-Stack Developer',
-        image: '/EventImages/Member1.jpg',
+        image: '/EventImages/Rinor Bytyqi.jpeg',
         details: 'Rinor Bytyqi is a proficient Full-Stack Developer with expertise in modern web technologies...'
     },
     {
@@ -21,17 +21,18 @@ const teamMembers = [
         details: 'Art Zherka is an innovative Front-end Developer with a passion for designing user-friendly interfaces...'
     },
     {
-        name: 'Art Hoxha',
-        role: 'Front-end Developer',
-        image: '/EventImages/Art Hoxha.jpeg',
-        details: 'Art Hoxha is a creative Front-end Developer with a knack for turning complex designs into reality...'
-    },
-    {
         name: 'Bajram Rexhbeqaj',
         role: 'Front-end Developer',
         image: '/EventImages/Bajram Rexhbeqaj.jpeg',
         details: 'Bajram Rexhbeqaj is a talented Front-end Developer focused on delivering high-quality web experiences...'
     },
+    {
+        name: 'Art Hoxha',
+        role: 'Front-end Developer',
+        image: '/EventImages/Art Hoxha.jpeg',
+        details: 'Art Hoxha is a creative Front-end Developer with a knack for turning complex designs into reality...'
+    },
+   
 ];
 
 const OurTeam = () => {
