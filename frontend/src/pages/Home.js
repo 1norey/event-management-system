@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
+import axios from 'axios'; // Import axios for API calls
 import './home.css'; // Import your CSS file for home styles
 import './slider.css'; // Import your CSS file for slider styles
 import PriceCalculator from './PriceCalculator';
-
+import { toast } from 'react-toastify'; // Import toast for notifications
 
 const Home = () => {
     // Sample events data
@@ -68,46 +69,64 @@ const Home = () => {
 
 
       // Price Calculator
-  const [eventType, setEventType] = useState('');
-  const [guestCount, setGuestCount] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [price, setPrice] = useState(0);
+    const [eventType, setEventType] = useState('');
+    const [guestCount, setGuestCount] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const [price, setPrice] = useState(0);
 
-  const handleEventTypeChange = (e) => {
-    setEventType(e.target.value);
-  };
+    const handleEventTypeChange = (e) => {
+        setEventType(e.target.value);
+    };
 
-  const handleGuestCountChange = (e) => {
-    setGuestCount(e.target.value);
-  };
+    const handleGuestCountChange = (e) => {
+        setGuestCount(e.target.value);
+    };
 
-  const handleDurationChange = (e) => {
-    setDuration(e.target.value);
-  };
+    const handleDurationChange = (e) => {
+        setDuration(e.target.value);
+    };
 
-  const calculatePrice = () => {
-    let basePrice = 0;
-    switch (eventType) {
-      case 'corporate':
-        basePrice = 500;
-        break;
-      case 'wedding':
-        basePrice = 2000;
-        break;
-      case 'privateParty':
-        basePrice = 1000;
-        break;
-      default:
-        basePrice = 0;
-    }
+    const calculatePrice = () => {
+        let basePrice = 0;
+        switch (eventType) {
+            case 'corporate':
+                basePrice = 500;
+                break;
+            case 'wedding':
+                basePrice = 2000;
+                break;
+            case 'privateParty':
+                basePrice = 1000;
+                break;
+            default:
+                basePrice = 0;
+        }
 
-    const guestPrice = guestCount * 10;
-    const durationPrice = duration * 50;
+        const guestPrice = guestCount * 10;
+        const durationPrice = duration * 50;
 
-    const totalPrice = basePrice + guestPrice + durationPrice;
-    setPrice(totalPrice);
-  }
+        const totalPrice = basePrice + guestPrice + durationPrice;
+        setPrice(totalPrice);
+    };
 
+    // Contact Form State and Handler
+    const [contact, setContact] = useState({ name: '', email: '', message: '' });
+
+    const handleContactChange = (e) => {
+        const { name, value } = e.target;
+        setContact({ ...contact, [name]: value });
+    };
+
+    const handleContactSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:5000/api/contacts', contact);
+            setContact({ name: '', email: '', message: '' });
+            toast.success('Message sent successfully');
+        } catch (error) {
+            toast.error('Error sending message');
+        }
+    };
 
     return (
         <div className="home-container">
@@ -182,148 +201,144 @@ const Home = () => {
                 </div>
             </div>
 
-<div className="gap"></div>
+            <div className="gap"></div>
 
-<div class="price-calculator">
-  <h2>Event Reservation Price Calculator</h2>
-  <form>
-    <label>
-      Event Type:
-      <select value={eventType} onChange={handleEventTypeChange}>
-        <option value="">Select an event type</option>
-        <option value="corporate">Corporate</option>
-        <option value="wedding">Technology Conference</option>
-        <option value="privateParty">Private Party</option>
-        <option value="Conference">Conference</option>
-      </select>
-    </label>
-    <label>
-      Guest Count:
-      <input type="number" value={guestCount} onChange={handleGuestCountChange} />
-    </label>
-    <label>
-      Duration (hours):
-      <input type="number" value={duration} onChange={handleDurationChange} />
-    </label>
-    <button type="button" onClick={calculatePrice}>
-      Calculate Price
-    </button>
-    <p class="result">Price: ${price}</p>
-  </form>
-</div>
+            <div className="price-calculator">
+                <h2>Event Reservation Price Calculator</h2>
+                <form>
+                    <label>
+                        Event Type:
+                        <select value={eventType} onChange={handleEventTypeChange}>
+                            <option value="">Select an event type</option>
+                            <option value="corporate">Corporate</option>
+                            <option value="wedding">Technology Conference</option>
+                            <option value="privateParty">Private Party</option>
+                            <option value="Conference">Conference</option>
+                        </select>
+                    </label>
+                    <label>
+                        Guest Count:
+                        <input type="number" value={guestCount} onChange={handleGuestCountChange} />
+                    </label>
+                    <label>
+                        Duration (hours):
+                        <input type="number" value={duration} onChange={handleDurationChange} />
+                    </label>
+                    <button type="button" onClick={calculatePrice}>
+                        Calculate Price
+                    </button>
+                    <p className="result">Price: ${price}</p>
+                </form>
+            </div>
 
- <div className="gap"></div>
- <div class="social-media-div">
-  <h2>Stay Connected</h2>
-  <ul>
-    <li>
-      <a href="https://www.facebook.com/yourfacebookpage" target="_blank">
-        <img src="/EventImages/f.jpg" alt="Facebook Logo"></img>
-        <span>Facebook</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://www.x.com/yourxhandle" target="_blank">
-        <img src="/EventImages/x.jpg" alt="X Logo"></img>
-        <span>X</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://www.instagram.com/yourinstagramhandle" target="_blank">
-        <img src="/EventImages/instagram.jpg" alt="Instagram Logo"></img>
-        <span>Instagram</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://www.linkedin.com/company/yourlinkedincompany" target="_blank">
-        <img src="/EventImages/linked.png" alt="LinkedIn Logo"></img>
-        <span>LinkedIn</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://www.youtube.com/youryoutubechannel" target="_blank">
-        <img src="/EventImages/youtube.png" alt="YouTube Logo"></img>
-        <span>YouTube</span>
-      </a>
-    </li>
-  </ul>
-  <p>Follow us for the latest updates on our events!</p>
-</div>
-<div className="gap"></div>
+            <div className="gap"></div>
+            <div className="social-media-div">
+                <h2>Stay Connected</h2>
+                <ul>
+                    <li>
+                        <a href="https://www.facebook.com/yourfacebookpage" target="_blank">
+                            <img src="/EventImages/f.jpg" alt="Facebook Logo"></img>
+                            <span>Facebook</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.x.com/yourxhandle" target="_blank">
+                            <img src="/EventImages/x.jpg" alt="X Logo"></img>
+                            <span>X</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/yourinstagramhandle" target="_blank">
+                            <img src="/EventImages/instagram.jpg" alt="Instagram Logo"></img>
+                            <span>Instagram</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/company/yourlinkedincompany" target="_blank">
+                            <img src="/EventImages/linked.png" alt="LinkedIn Logo"></img>
+                            <span>LinkedIn</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/youryoutubechannel" target="_blank">
+                            <img src="/EventImages/youtube.png" alt="YouTube Logo"></img>
+                            <span>YouTube</span>
+                        </a>
+                    </li>
+                </ul>
+                <p>Follow us for the latest updates on our events!</p>
+            </div>
+            <div className="gap"></div>
 
-            <div class="carousel-container">
-        <div class="carousel-inner">
-           
-            <div class="carousel-item">
-                <img src="/EventImages/uber.jpg" alt="Uber"></img>
+            <div className="carousel-container">
+                <div className="carousel-inner">
+                    <div className="carousel-item">
+                        <img src="/EventImages/uber.jpg" alt="Uber"></img>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/EventImages/bose.jpg" alt="Bose"></img>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/EventImages/walt.png" alt="Walt"></img>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/EventImages/heineken.jpg" alt="Heineken"></img>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/EventImages/sponsors.jpeg" alt="Sponsors"></img>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/EventImages/thanks1.jpg" alt="Thanks"></img>
+                    </div>
+                </div>
             </div>
-            <div class="carousel-item">
-                <img src="/EventImages/bose.jpg" alt="Bose"></img>
+
+            <div className="text">
+                <h1> Thank you to some of our Sponsors</h1>
             </div>
-            <div class="carousel-item">
-                <img src="/EventImages/walt.png" alt="Walt"></img>
-            </div>
-            <div class="carousel-item">
-                <img src="/EventImages/heineken.jpg" alt="Heineken"></img>
-            </div>
-            <div class="carousel-item">
-                <img src="/EventImages/sponsors.jpeg" alt="Sponsors"></img>
-            </div>
-            <div class="carousel-item">
-                <img src="/EventImages/thanks1.jpg" alt="Thanks"></img>
-            </div>
-           
-            <div class="carousel-item">
-                <img src="/EventImages/uber.jpg" alt="Uber"></img>
-            </div>
-            <div class="carousel-item">
-                <img src="/EventImages/bose.jpg" alt="Bose"></img>
-            </div>
-            <div class="carousel-item">
-                <img src="/EventImages/walt.png" alt="Walt"></img>
-            </div>
-            <div class="carousel-item">
-                <img src="/EventImages/heineken.jpg" alt="Heineken"></img>
-            </div>
-            <div class="carousel-item">
-                <img src="/EventImages/sponsors.jpeg" alt="Sponsors"></img>
-            </div>
-            <div class="carousel-item">
-                <img src="/EventImages/thanks1.jpg" alt="Thanks"></img>
+
+            <div className="contact-us">
+                <div className="contact-form">
+                    <h2>Get in Touch</h2>
+                    <p>Have a question or want to learn more about our events? Send us a message!</p>
+                    <form onSubmit={handleContactSubmit}>
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            value={contact.name}
+                            onChange={handleContactChange}
+                            required
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={contact.email}
+                            onChange={handleContactChange}
+                            required
+                        />
+                        <textarea
+                            name="message"
+                            placeholder="Message"
+                            value={contact.message}
+                            onChange={handleContactChange}
+                            required
+                        />
+                        <button type="submit">Send</button>
+                    </form>
+                </div>
+                <div>
+                    <iframe
+                        className="contact-map"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387198.0696314914!2d-74.60356651051723!3d40.69632978678025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1718931541611!5m2!1sen!2s"
+                        allowFullScreen=""
+                        loading="lazy"
+                    ></iframe>
+                </div>
             </div>
         </div>
-    </div>
-
-<div class="text">
-    <h1> Thank you to some of our Sponsors</h1>
-</div>
-    
-<div className="contact-us">
-        <div className="contact-form">
-          <h2>Get in Touch</h2>
-          <p>Have a question or want to learn more about our events? Send us a message!</p>
-          <form>
-            <input type="text" placeholder="Name" />
-            <input type="email" placeholder="Email" />
-            <textarea placeholder="Message" />
-            <button type="submit">Send</button>
-          </form>
-        </div>
-        <div>
-          <iframe
-            className="contact-map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387198.0696314914!2d-74.60356651051723!3d40.69632978678025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1718931541611!5m2!1sen!2s"
-            allowFullScreen=""
-            loading="lazy"
-          ></iframe>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Home;
-
-
-
-
