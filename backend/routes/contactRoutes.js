@@ -2,10 +2,19 @@ const express = require('express');
 const router = express.Router();
 const contactController = require('../controllers/contactController');
 
-router.post('/contacts', contactController.createContact);
-router.get('/contacts', contactController.getContacts);
-router.get('/contacts/:id', contactController.getContactById);
-router.put('/contacts/:id', contactController.updateContact);
-router.delete('/contacts/:id', contactController.deleteContact);
+// POST /api/contacts
+router.post('/', contactController.createContact);
+
+// GET /api/contacts
+router.get('/', contactController.getContacts);
+
+// GET /api/contacts/:id
+router.get('/:id', contactController.getContactById);
+
+// PUT /api/contacts/:id
+router.put('/:id', contactController.updateContact);
+
+// DELETE /api/contacts/:id
+router.delete('/:id', contactController.deleteContact);
 
 module.exports = router;

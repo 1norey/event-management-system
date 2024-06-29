@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import './home.css'; // Import your CSS file for home styles
 import './slider.css'; // Import your CSS file for slider styles
-import PriceCalculator from './PriceCalculator.';
+import PriceCalculator from './PriceCalculator';
 
 
 const Home = () => {
