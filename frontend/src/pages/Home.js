@@ -19,7 +19,7 @@ const Home = () => {
             title: "Blockchain Expo",
             date: "2024-10-20",
             description: "Discover the latest trends in blockchain technology.",
-            imageUrl: "/EventImages/BlockchainEventImage.png"
+            imageUrl: "/EventImages/blockchainImage.jpg"
         },
         // Add more events as needed
     ];
