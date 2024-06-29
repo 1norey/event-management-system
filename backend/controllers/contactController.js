@@ -1,64 +1,94 @@
 const Contact = require('../models/ContactUs');
 
-// Create a new contact
-exports.createContact = async (req, res) => {
-  try {
-    const newContact = new Contact(req.body);
-    const savedContact = await newContact.save();
-    res.status(201).json(savedContact);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
+const createContact = async (req, res) => {
+    const { email, name, message } = req.body;
 
-// Get all contacts
-exports.getContacts = async (req, res) => {
-  try {
-    const contacts = await Contact.find();
-    res.status(200).json(contacts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-// Get a single contact by ID
-exports.getContactById = async (req, res) => {
-  try {
-    const contact = await Contact.findById(req.params.id);
-    if (contact) {
-      res.status(200).json(contact);
-    } else {
-      res.status(404).json({ message: 'Contact not found' });
+    try {
+        const contact = new Contact({ email, name, message });
+        await contact.save();
+        res.status(201).json({ message: 'Contact created successfully', contact });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
 };
 
-// Update a contact
-exports.updateContact = async (req, res) => {
-  try {
-    const contact = await Contact.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (contact) {
-      res.status(200).json(contact);
-    } else {
-      res.status(404).json({ message: 'Contact not found' });
+const getContacts = async (req, res) => {
+    try {
+        const contacts = await Contact.find();
+        res.status(200).json(contacts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
 };
 
-// Delete a contact
-exports.deleteContact = async (req, res) => {
-  try {
-    const contact = await Contact.findByIdAndDelete(req.params.id);
-    if (contact) {
-      res.status(200).json({ message: 'Contact deleted' });
-    } else {
-      res.status(404).json({ message: 'Contact not found' });
+const getContactById = async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ message: 'Contact ID is required' });
     }
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+
+    try {
+        const contact = await Contact.findById(id);
+        if (!contact) {
+            return res.status(404).json({ message: 'Contact not found' });
+        }
+        res.status(200).json(contact);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const updateContact = async (req, res) => {
+    const { id } = req.params;
+    const { email, name, message } = req.body;
+
+    if (!id) {
+        return res.status(400).json({ message: 'Contact ID is required' });
+    }
+
+    try {
+        const contact = await Contact.findByIdAndUpdate(
+            id,
+            { email, name, message },
+            { new: true, runValidators: true }
+        );
+        if (!contact) {
+            return res.status(404).json({ message: 'Contact not found' });
+        }
+        res.status(200).json({ message: 'Contact updated successfully', contact });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const deleteContact = async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ message: 'Contact ID is required' });
+    }
+
+    try {
+        const contact = await Contact.findByIdAndDelete(id);
+        if (!contact) {
+            return res.status(404).json({ message: 'Contact not found' });
+        }
+        res.status(200).json({ message: 'Contact deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+module.exports = {
+    createContact,
+    getContacts,
+    getContactById,
+    updateContact,
+    deleteContact
 };
